@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.9.1.js" ></script>
+    <script src="layui/layui.js"></script>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+</head>
+<body>
+<div style="margin: auto;margin-top:50px;width: 300px;height: 400px;">
+    <div>
+        <button type="button" class="layui-btn" id="test1">
+            <i class="layui-icon">&#xe67c;</i>上传文件
+        </button>
+    </div>
+    <br>
+    <div class="layui-progress" style="width: 537.5px;margin-top: -7px;">
+        <div class="layui-progress-bar layui-bg-blue" id="file_jindu" lay-percent="0%" style="width: 0%;"></div>
+    </div>
+    <div>
+        网速:<span id="wangsu"></span>
+    </div>
+    <input type="hidden" id="thisSize" value="0">
+</div>
+
+<script>
+    layui.use('upload', function(){
+        var upload = layui.upload;
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            ,url: '/userController/upload' //上传接口
+            ,field: 'pic'
+            ,accept:'file'
+            ,auto: true
+            ,drag:true
+            ,before:function (obj) {
+                ajaxToFile();
+            }
+            ,done: function(res){
+                //上传完毕回调
+            }
+            ,error: function(){
+                //请求异常回调
+            }
+        });
+    });
+    var stopSweet_file=null;
+    function ajaxToFile(){
+        stopSweet_file=setInterval(function(){
+            $.ajax({
+                url:'/userController/JDT',
+                type : 'post',
+                dataType:'json',
+                success:function(result){
+                    $("#file_jindu").attr("lay-percent",(result.uploadSize/result.AllSize)*100+"%");
+                    $("#file_jindu").css("width",(result.uploadSize/result.AllSize)*100+"%");
+                    //先取值
+                    var $thisSize=$("#thisSize").val();
+                    //然后取得传过来的数据,计算网速
+                    if(result.thisSize == -1){
+                        $("#wangsu").html("0 KB / S [文件秒传]");
+                        clearInterval(stopSweet_file);
+                    }else{
+                        var $wangsu=result.thisSize-$thisSize;
+                        if($wangsu/1024 < 1024){
+                            $("#wangsu").html(Math.ceil(($wangsu/1024))+" KB / S");
+                        }else{
+                            $("#wangsu").html(($wangsu/1024/1024).toFixed(2)+" MB / S");
+                        }
+                        $("#thisSize").val(result.thisSize);
+                        if(result.isReady == true){
+                            clearInterval(stopSweet_file);
+                        }
+                    }
+                }
+            });
+        },1000);
+    }
+</script>
+</body>
+</html>

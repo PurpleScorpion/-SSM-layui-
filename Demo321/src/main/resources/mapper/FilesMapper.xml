@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sweet.mapper.FilesMapper">
+  <resultMap id="BaseResultMap" type="com.sweet.model.Files">
+    <id column="fid" jdbcType="VARCHAR" property="fid" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="md5" jdbcType="VARCHAR" property="md5" />
+    <result column="uploadTime" jdbcType="TIMESTAMP" property="uploadtime" />
+    <result column="alreadySize" jdbcType="BIGINT" property="alreadysize" />
+    <result column="allSize" jdbcType="BIGINT" property="allsize" />
+    <result column="isFinish" jdbcType="INTEGER" property="isfinish" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    fid, url, md5, uploadTime, alreadySize, allSize, isFinish, uid
+  </sql>
+  <select id="selectByExample" parameterType="com.sweet.model.FilesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from files
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from files
+    where fid = #{fid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from files
+    where fid = #{fid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sweet.model.FilesExample">
+    delete from files
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sweet.model.Files">
+    insert into files (fid, url, md5, 
+      uploadTime, alreadySize, allSize, 
+      isFinish, uid)
+    values (#{fid,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{md5,jdbcType=VARCHAR}, 
+      #{uploadtime,jdbcType=TIMESTAMP}, #{alreadysize,jdbcType=INTEGER}, #{allsize,jdbcType=INTEGER}, 
+      #{isfinish,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sweet.model.Files">
+    insert into files
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fid != null">
+        fid,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="md5 != null">
+        md5,
+      </if>
+      <if test="uploadtime != null">
+        uploadTime,
+      </if>
+      <if test="alreadysize != null">
+        alreadySize,
+      </if>
+      <if test="allsize != null">
+        allSize,
+      </if>
+      <if test="isfinish != null">
+        isFinish,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fid != null">
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="md5 != null">
+        #{md5,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadtime != null">
+        #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alreadysize != null">
+        #{alreadysize,jdbcType=INTEGER},
+      </if>
+      <if test="allsize != null">
+        #{allsize,jdbcType=INTEGER},
+      </if>
+      <if test="isfinish != null">
+        #{isfinish,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sweet.model.FilesExample" resultType="java.lang.Long">
+    select count(*) from files
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update files
+    <set>
+      <if test="record.fid != null">
+        fid = #{record.fid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.md5 != null">
+        md5 = #{record.md5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadtime != null">
+        uploadTime = #{record.uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.alreadysize != null">
+        alreadySize = #{record.alreadysize,jdbcType=INTEGER},
+      </if>
+      <if test="record.allsize != null">
+        allSize = #{record.allsize,jdbcType=INTEGER},
+      </if>
+      <if test="record.isfinish != null">
+        isFinish = #{record.isfinish,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update files
+    set fid = #{record.fid,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      md5 = #{record.md5,jdbcType=VARCHAR},
+      uploadTime = #{record.uploadtime,jdbcType=TIMESTAMP},
+      alreadySize = #{record.alreadysize,jdbcType=INTEGER},
+      allSize = #{record.allsize,jdbcType=INTEGER},
+      isFinish = #{record.isfinish,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sweet.model.Files">
+    update files
+    <set>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="md5 != null">
+        md5 = #{md5,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadtime != null">
+        uploadTime = #{uploadtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alreadysize != null">
+        alreadySize = #{alreadysize,jdbcType=INTEGER},
+      </if>
+      <if test="allsize != null">
+        allSize = #{allsize,jdbcType=INTEGER},
+      </if>
+      <if test="isfinish != null">
+        isFinish = #{isfinish,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where fid = #{fid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sweet.model.Files">
+    update files
+    set url = #{url,jdbcType=VARCHAR},
+      md5 = #{md5,jdbcType=VARCHAR},
+      uploadTime = #{uploadtime,jdbcType=TIMESTAMP},
+      alreadySize = #{alreadysize,jdbcType=INTEGER},
+      allSize = #{allsize,jdbcType=INTEGER},
+      isFinish = #{isfinish,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR}
+    where fid = #{fid,jdbcType=VARCHAR}
+  </update>
+  <select id="findFileByMD5" parameterType="String" resultType="com.sweet.model.Files">
+    select * from files where md5=#{md5}
+  </select>
+</mapper>
