@@ -23,7 +23,7 @@
     <xlsx-streamer.version>1.2.0</xlsx-streamer.version>
     <jxl.version>2.6</jxl.version>
     <jfreechart.version>1.0.19</jfreechart.version>
-    <beanutils.version>1.8.3</beanutils.version>
+    <beanutils.version>1.9.2</beanutils.version>
     <servlet.version>3.1.0</servlet.version>
     <jstl.version>1.2</jstl.version>
     <standard.version>1.1.2</standard.version>
