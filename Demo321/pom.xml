@@ -20,7 +20,7 @@
     <mysql.version>5.1.37</mysql.version>
     <c3p0.version>0.9.1.2</c3p0.version>
     <poi.version>3.17</poi.version>
-    <xlsx-streamer.version>1.2.0</xlsx-streamer.version>
+    <xlsx-streamer.version>2.1.0</xlsx-streamer.version>
     <jxl.version>2.6</jxl.version>
     <jfreechart.version>1.0.19</jfreechart.version>
     <beanutils.version>1.8.3</beanutils.version>
